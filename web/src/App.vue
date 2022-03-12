@@ -6,11 +6,11 @@ import { RouterLink, RouterView } from "vue-router";
   <div>
     <RouterView />
 
-    <footer>
-      <div>
+    <footer>  
+      <div class="absolute bottom-0">
         <nav>
           <RouterLink to="/">Главная</RouterLink>
-          <RouterLink to="/about">Справочник</RouterLink>
+          <RouterLink to="/information">Справочник</RouterLink>
           <RouterLink to="/scanner">Сканнер</RouterLink>
           <RouterLink to="/map">Карта</RouterLink>
           <RouterLink to="/profile">Профиль</RouterLink>
