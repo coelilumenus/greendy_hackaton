@@ -110,6 +110,8 @@
 
 <script>
 export default {
+  props: ['info'],
+
   methods: {
     closeModal() {
      this.$emit('closeModal')

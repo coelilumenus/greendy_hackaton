@@ -2,7 +2,7 @@
   <div>
     <div class="text-red-500 max-w-full">
       <div
-        v-if="!isDetected && !isLandscapeOrientation"
+        v-if="!isLandscapeOrientation && !isDetected"
         class="flex flex-col justify-center items-center mt-24"
       >
         <div class="font-bold text-sm text-green-500 mb-8">
@@ -21,8 +21,8 @@
           :readerTypes="readerTypes"
         />
 
-        <div v-else-if="isDetected">
-          <success-modal @closeModal="closeModal" v-if="isDataExist" />
+        <div v-else>
+          <success-modal @closeModal="closeModal" :info="info" v-if="status" />
           <new-barcode-modal @closeModal="closeModal" :barcode="code" v-else />
         </div>
       </div>
@@ -48,8 +48,6 @@ export default {
   data() {
     return {
       isDetected: false,
-      isDataExist: false,
-      isModalClosed: true,
       info: {},
       code: null,
       angle: window.orientation,
@@ -67,6 +65,12 @@ export default {
 
       return this.angle === 90 || this.angle === -90;
     },
+
+    status() {
+      if (!info) return false
+
+      return info.status
+    }
   },
 
   mounted() {
@@ -82,19 +86,17 @@ export default {
       this.angle = window.orientation;
     },
 
-    logIt({ codeResult }) {
+    async logIt({ codeResult }) {
       this.isDetected = true;
       const { code } = codeResult;
       this.code = code;
 
-      const info = barcodeService.getBarcodeInfo(code);
+      const info = await barcodeService
+        .getBarcodeInfo(code)
+        .then(() => (this.isModalClosed = false));
 
-      if (info?.type === "NOT_EXIST") {
-        this.isDataExist = false;
-        this.isModalClosed = false;
-      } else if (info?.value.length) {
-        this.isDataExist = true;
-        this.isModalClosed = false;
+      if (info?.material.length) {
+        this.info = info;
       }
     },
 

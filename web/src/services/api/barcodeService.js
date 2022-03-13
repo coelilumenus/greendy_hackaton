@@ -8,7 +8,7 @@ const barcodeService = {
       return response.data
     } 
     catch (error) {
-      throw error.response.data
+      console.log(error) 
     }
   },
 
@@ -18,7 +18,7 @@ const barcodeService = {
       return response.data
     } 
     catch (error) {
-      throw error.response.data
+      console.log(error) 
     }
   }
 

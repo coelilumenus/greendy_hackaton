@@ -189,7 +189,7 @@ export default {
   methods: {
     postNewInfo() {
       if (!this.value.length) return
-      barcodeService.postBarcodeInfo({value: this.value, barcode: this.barcode})
+      barcodeService.postBarcodeInfo({value: this.value, barcode: Number(this.barcode)})
       this.closeModal()
     },
 
