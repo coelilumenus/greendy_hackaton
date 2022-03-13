@@ -1,0 +1,6 @@
+{
+  "port": 8082,
+  "mongoURI": "mongodb+srv://admin:pTcfGzjvTxnMopTb@greendy.nlmuf.mongodb.net/addresses?retryWrites=true&w=majority",
+  "baseURL": "http://localhost:5000",
+  "jwtSecret": "BalluMSIXiaomi"
+}
