@@ -4,7 +4,7 @@ const barcodeService = {
 
   async getBarcodeInfo(barcode) {
     try {
-      const response = await axios.get(`/barcodes/${barcode}`)
+      const response = await axios.get(`https://nikitaguriev.site/api/barcodes/${barcode}`)
       return response.data
     } 
     catch (error) {
@@ -14,7 +14,7 @@ const barcodeService = {
 
   async postBarcodeInfo(info) {
     try {
-      const response = await axios.post(`/barcodes/`, info)
+      const response = await axios.post(`https://nikitaguriev.site/api/barcodes/`, info)
       return response.data
     } 
     catch (error) {
@@ -25,6 +25,6 @@ const barcodeService = {
 }
 
 
-export default {
-  barcode: barcodeService
+export {
+  barcodeService
 }

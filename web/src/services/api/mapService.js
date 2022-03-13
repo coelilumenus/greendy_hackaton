@@ -4,16 +4,15 @@ const mapService = {
 
   async getAddresses() {
     try {
-      const response = await axios.get(`/addresses`)
+      const response = await axios.get(`https://nikitaguriev.site/api/addresses`)
       return response.data
     } 
     catch (error) {
       throw error.response.data
     }
   }
-
 }
 
-export default {
-  map: mapService
+export {
+  mapService
 }

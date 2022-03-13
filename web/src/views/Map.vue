@@ -8,12 +8,19 @@
       :controls="yMap.controls"
       :coords="currentCoords"
     >
+      <ymapMarker
+        v-for="address of addresses"
+        :key="address.id"
+        :coords="address.coords"
+        :properties="{balloonContent: address.name}"
+      />
     </yandex-map>
   </div>
 </template>
 
 <script>
 import { yandexMap, ymapMarker } from "vue-yandex-maps";
+import { mapService } from "../services/api/mapService.js";
 
 export default {
   components: {
@@ -23,24 +30,33 @@ export default {
 
   data() {
     return {
-      currentCoords: [],
+      currentCoords: [45.03547, 38.975313],
+      addresses: [],
       yMap: {
         settings: {
           apiKey: "db8624d7-03c7-4419-911f-e03056ad8089",
           lang: "ru_RU",
           coordorder: "latlong",
           enterprise: false,
-          version: "2.1"
+          version: "2.1",
         },
-        controls: ["zoomControl", "fullscreenControl", "typeSelector", "routeButtonControl", "geolocationControl"],
+        controls: [
+          "zoomControl",
+          "fullscreenControl",
+          "typeSelector",
+          "routeButtonControl",
+          "geolocationControl",
+        ],
       },
     };
   },
 
-  mounted() {
-    navigator.geolocation.getCurrentPosition(({coords}) => {
-      this.currentCoords = [coords.latitude, coords.longitude]
+  async mounted() {
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      this.currentCoords = [coords.latitude, coords.longitude];
     });
+
+    this.addresses = await mapService.getAddresses();
   },
 };
 </script>
