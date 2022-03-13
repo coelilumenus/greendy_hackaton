@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: '/information',
       name: 'information',
-      component: () => import('../views/Information.vue')
+      component: () => import('../views/Information.vue'),
     },
     {
       path: '/map',
@@ -27,6 +27,11 @@ const router = createRouter({
       path: '/scanner',
       name: 'scanner',
       component: () => import('../views/Scanner.vue')
+    },
+    {
+      path: '/plastic',
+      name: 'Plastic',
+      component: () => import('../components/information/plastic.vue'),
     }
   ]
 })

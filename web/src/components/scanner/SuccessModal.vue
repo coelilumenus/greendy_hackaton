@@ -11,7 +11,6 @@
         items-end
         justify-center
         min-h-screen
-        -mt-32
         pt-4
         px-4
         pb-20
@@ -66,11 +65,7 @@
               >
                 Отлично. Теперь вы можете сдать отходы на переработку!
               </h3>
-              <div class="mt-2">
-                <p class="text-sm text-gray-500">
-                  К сожалению, frontend разработчик очень устал и не успел доделать логику этого раздела :с Пожалуйста, представьте красивую страницу которая ведёт вас по маршруту прямиком в прекрасное будущее, где экология и человеческая жизнь стоят на первых местах в списке приоритетов.
-                </p>
-              </div>
+              <plastic />
             </div>
           </div>
         </div>
@@ -109,8 +104,14 @@
 </template>
 
 <script>
+import plastic from "../information/Plastic.vue"
+
 export default {
   props: ['info'],
+
+  components: {
+    plastic
+  },
 
   methods: {
     closeModal() {

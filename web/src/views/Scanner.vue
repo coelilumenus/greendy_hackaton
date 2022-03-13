@@ -23,7 +23,11 @@
 
         <div v-else>
           <success-modal @closeModal="closeModal" :info="info" v-if="status" />
-          <new-barcode-modal @closeModal="closeModal" :barcode="code" v-else />
+          <new-barcode-modal
+            @closeModal="closeModal"
+            :barcode="code"
+            v-if="!status"
+          />
         </div>
       </div>
     </div>
@@ -67,10 +71,10 @@ export default {
     },
 
     status() {
-      if (!info) return false
+      if (!this.info) return false;
 
-      return info.status
-    }
+      return this.info.status;
+    },
   },
 
   mounted() {
@@ -95,9 +99,7 @@ export default {
         .getBarcodeInfo(code)
         .then(() => (this.isModalClosed = false));
 
-      if (info?.material.length) {
-        this.info = info;
-      }
+      this.info = info;
     },
 
     closeModal() {
