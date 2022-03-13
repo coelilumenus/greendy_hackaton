@@ -11,11 +11,6 @@ const Classes = require('../models/Classes');
 const ROUTER = Router();
 
 /**
- * Блок определения констант
- */
-const BARCODE_API_URI = 'https://api.barcodes-catalog.ru/barcode/free_search';
-
-/**
  * Блок алгоритма работы
  */
 ROUTER.get(
@@ -23,21 +18,29 @@ ROUTER.get(
   async (req, res) => {
     try {
       const {code} = req.params;
-      const BARCODE = await Barcode.findOne({
-        barcode: code
-      })
+      console.log(req.params, 'GET');
+      const BARCODE = await Barcode
+        .findOne({
+          barcode: code
+        })
         .select('-_id');
+      console.log(BARCODE);
       if (BARCODE) {
+        console.log('IF');
         res.status(200).json({
           barcode: BARCODE.barcode,
           material: BARCODE.material.split(','),
+          status: true
         });
+        console.log(BARCODE.material.split(','));
       } else {
-        res.status(404).json({
-          type: 'NOT_EXIST'
+        console.log('ELSE');
+        res.status(406).json({
+          status: false
         });
       }
     } catch (err) {
+      console.log('CATCH');
       res.status(500).json({message: `Возникла непредвиденная ошибка, пожалуйста, повторите попытку позже, либо обратитесь к разработчику приложения`});
     }
   });
@@ -46,7 +49,7 @@ ROUTER.post(
   '/',
   async (req, res) => {
     try {
-      console.log(req.body);
+      console.log(req.body, 'POST');
       if (req.body.type === 'class') {
         const CLASSES = await Classes.findOne({
           class: {

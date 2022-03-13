@@ -5,7 +5,7 @@ const express = require('express');
 const CONFIG = require('config');
 const MONGOOSE = require('mongoose');
 const BODY_PARSER = require('body-parser');
-const cors = require('cors');
+const CORS = require('cors');
 
 /**
  * Блок определения констант
@@ -20,11 +20,13 @@ const PORT = CONFIG.get('port') || 5000
  * Общее
  */
 APP.use(BODY_PARSER.json());
-APP.use(cors({
-  origin: [
-    /localhost\:[0-9]+$/,
-    /wsl\.local\:[0-9]+$/
-  ],
+APP.use(CORS({
+  origin: '*',
+  // origin: [
+  //   /localhost\:[0-9]+$/,
+  //   /wsl\.local\:[0-9]+$/,
+  //   /\.coelilumenus\.github.io$/
+  // ],
   credentials: true
 }));
 APP.disable('x-powered-by');
@@ -35,6 +37,7 @@ APP.disable('etag');
  */
 APP.use('/api/barcodes', require('./routes/barcodes.routes'));
 APP.use('/api/addresses', require('./routes/addresses.routes'));
+APP.use('/api/auth', require('./routes/auth.routes'));
 
 /**
  * Блок алгоритма работы приложения
