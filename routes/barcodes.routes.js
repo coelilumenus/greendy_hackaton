@@ -46,6 +46,7 @@ ROUTER.post(
   '/',
   async (req, res) => {
     try {
+      console.log(req.body);
       if (req.body.type === 'class') {
         const CLASSES = await Classes.findOne({
           class: {
@@ -58,13 +59,23 @@ ROUTER.post(
         });
         await ADD_RECORD.save();
       } else {
-        const ADD_RECORD = new Barcode({
-          barcode: req.body.barcode,
-          material: req.body.value,
-        });
-        await ADD_RECORD.save();
+        if (typeof req.body.value === 'object') {
+          const MATERIAL = req.body.value.join();
+          const ADD_RECORD = new Barcode({
+            barcode: req.body.barcode,
+            material: MATERIAL,
+          });
+          await ADD_RECORD.save();
+        } else {
+          const MATERIAL = req.body.value;
+          const ADD_RECORD = new Barcode({
+            barcode: req.body.barcode,
+            material: MATERIAL,
+          });
+          await ADD_RECORD.save();
+        }
       }
-      res.status(200).json({result: 'maless'});
+      res.status(200).json({result: 'success'});
     } catch (err) {
       res.status(500).json({message: `Возникла непредвиденная ошибка, пожалуйста, повторите попытку позже, либо обратитесь к разработчику приложения`});
     }

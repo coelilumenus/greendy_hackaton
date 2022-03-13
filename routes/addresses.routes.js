@@ -80,29 +80,7 @@ ROUTER.get(
   '/tests',
   async (req, res) => {
     try {
-      const COORDS = [
-        {
-          id: 1,
-          coords: ['44.1111111', '43.2222222']
-        },
-        {
-          id: 2,
-          coords: ['44.2222222', '41.5555555']
-        },
-        {
-          id: 3,
-          coords: ['32.7777777', '33.8888888']
-        },
-      ];
-      const CURRENT_COORDS = ['32.6666666', '47.9999999'];
-      const NEAREST_COORDS = COORDS.map((data) => {
-        const X1 = data.coords[0];
-        const X2 = data.coords[1];
-        const Y1 = CURRENT_COORDS[0];
-        const Y2 = CURRENT_COORDS[1];
-        const D = Math.sqrt(Math.pow(X2 - X1, 2) + Math.pow(Y2 - Y1, 2));
-      });
-      res.status(200).json(NEAREST_COORDS);
+      res.status(200).json({message: `Проверка`});
     } catch (err) {
       res.status(500).json({message: `Возникла непредвиденная ошибка, пожалуйста, повторите попытку позже, либо обратитесь к разработчику приложения`});
     }
