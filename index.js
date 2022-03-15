@@ -6,6 +6,7 @@ const CONFIG = require('config');
 const MONGOOSE = require('mongoose');
 const BODY_PARSER = require('body-parser');
 const cors = require('cors');
+const PATH = require("path");
 
 /**
  * Блок определения констант
@@ -35,6 +36,13 @@ APP.disable('etag');
  */
 APP.use('/api/barcodes', require('./routes/barcodes.routes'));
 APP.use('/api/addresses', require('./routes/addresses.routes'));
+
+if (process.env.NODE_ENV === 'production') {
+  APP.use('/', express.static(PATH.join(__dirname, 'web')));
+  APP.get('*', (req, res) => {
+    res.sendFile(PATH.resolve(__dirname, 'web', 'index.html'));
+  });
+}
 
 /**
  * Блок алгоритма работы приложения
